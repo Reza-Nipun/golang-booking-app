@@ -31,33 +31,33 @@ func main() {
 		fmt.Println("Enter number of tickets: ")
 		fmt.Scan(&userTickets)
 
-		if userTickets > remainingTickets {
+		if userTickets <= remainingTickets {
+			remainingTickets = remainingTickets - userTickets
+			bookings = append(bookings, firstName+" "+lastName)
+
+			// fmt.Printf("The whole bookings slice: %v\n", bookings)
+			// fmt.Printf("The first booking is %v\n", bookings[0])
+			// fmt.Printf("Slice type: %T\n", bookings)
+			// fmt.Printf("Slice length: %v\n", len(bookings))
+
+			fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
+			fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
+
+			// print first names of all bookings
+			firstNames := []string{}
+			for _, booking := range bookings {
+				var names = strings.Fields(booking) // this returns a slice of strings - array
+				firstNames = append(firstNames, names[0]) // preparing the slice of first names of all bookings
+			}
+			fmt.Printf("The first names of all our bookings: %v\n", firstNames)
+
+			if remainingTickets == 0 {
+				// end program
+				fmt.Println("Our conference is booked out. Come back next year.")
+				break
+			}
+		} else {
 			fmt.Printf("We only have %v tickets remaining, so you can't book %v tickets\n", remainingTickets, userTickets)
-			return
 		}
-		if userTickets <= 0 {
-			fmt.Printf("You need to book at least 1 ticket\n")
-			return
-		}
-
-		bookings = append(bookings, firstName+" "+lastName)
-
-		// fmt.Printf("The whole bookings slice: %v\n", bookings)
-		// fmt.Printf("The first booking is %v\n", bookings[0])
-		// fmt.Printf("Slice type: %T\n", bookings)
-		// fmt.Printf("Slice length: %v\n", len(bookings))
-		
-		remainingTickets = remainingTickets - userTickets
-
-		fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
-		fmt.Printf("%v tickets remaining for %v\n", remainingTickets, conferenceName)
-
-		// print first names of all bookings
-		firstNames := []string{}
-		for _, booking := range bookings {
-			var names = strings.Fields(booking) // this returns a slice of strings - array
-			firstNames = append(firstNames, names[0]) // preparing the slice of first names of all bookings
-		}
-		fmt.Printf("The first names of all our bookings: %v\n", firstNames)
 	}
 }
